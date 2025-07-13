@@ -1,23 +1,37 @@
-import employeeIcon from '@ui5/webcomponents-icons/dist/employee.js';
-import { Avatar, ShellBar } from '@ui5/webcomponents-react';
-import SayHi from './components/SayHi';
-import MyCard  from './components/MyCard';
+import Profile from "../assets/profile.png";
+import reactIcon from "../assets/react-icon.png";
+import activateIcon from "@ui5/webcomponents-icons/dist/activate.js";
+import { Avatar, ShellBar, ShellBarItem } from '@ui5/webcomponents-react';
+import { Home } from "./components/Home";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { Detail } from "./components/Detail";
+import { useNavigate } from "react-router-dom";
+
+
+
 function App() {
+  const navigate = useNavigate();
+  const handleLogoClick = () => {
+    navigate("./");
+  };
+
   return (
-    <>
+    <div>
+
       <ShellBar
-        logo={
-          <img
-            src="https://raw.githubusercontent.com/SAP/ui5-webcomponents-react/main/assets/ui5-logo.svg"
-            alt={'UI5 Web Components for React logo'}
-          />
-        }
-        primaryTitle="UI5 Web Components for React Template"
-        profile={<Avatar icon={employeeIcon} />}
-      />
-      <SayHi />
-      <MyCard />
-    </>
+        logo={<img src={reactIcon} alt="Company Logo" />}
+        profile={<Avatar><img src={Profile} alt="User Avatar" /></Avatar>}
+        primaryTitle="My App"
+        onLogoClick={handleLogoClick}
+      >
+        <ShellBarItem icon={activateIcon} text="Activate" />
+      </ShellBar>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/detail" element={<Detail />} />
+        <Route path="*" element={<Navigate replace to="/home" />} />
+      </Routes>
+    </div>
   );
 }
 
